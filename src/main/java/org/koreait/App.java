@@ -34,12 +34,16 @@ public class App {
             if (cmd.equals("add")) {
                 motivationController.add();
             } else if (cmd.equals("list")) {
-               motivationController.list();
+                motivationController.list();
 
-            }else if (cmd.length() > 6){
-                if(cmd.substring(0,6).equals("삭제?id=")) {
-                motivationController.remove(Integer.parseInt(cmd.substring(6,cmd.length())));}
-            }else if(cmd.equals("수정")){
+            } else if (cmd.startsWith("delete?id=")) {
+                int idnums = Integer.parseInt(cmd.replaceAll("[^1-9]", ""));
+                if (cmd.length() < idnums) {
+                    System.out.println("없는 id번호입니다.");
+                } else {
+                    motivationController.remove(idnums);
+                }
+            } else if (cmd.equals("수정")) {
                 motivationController.update();
             }
         }
