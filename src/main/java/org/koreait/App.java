@@ -5,7 +5,9 @@ import org.koreait.motivation.entity.Motivation;
 import org.koreait.system.controller.SystemController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class App {
 
@@ -37,12 +39,13 @@ public class App {
                 motivationController.list();
 
             } else if (cmd.startsWith("delete?id=")) {
-                int idnums = Integer.parseInt(cmd.replaceAll("[^1-9]", ""));
-                if (cmd.length() < idnums) {
-                    System.out.println("없는 id번호입니다.");
-                } else {
-                    motivationController.remove(idnums);
-                }
+
+                Rq Rq = new Rq(cmd);
+
+
+                    motivationController.remove();
+
+
             } else if (cmd.equals("수정")) {
                 motivationController.update();
             }

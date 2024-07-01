@@ -1,9 +1,9 @@
 package org.koreait.motivation.entity;
 
 public class Motivation {
-    public int id;
-    public String body;
-    public  String source;
+    private int id;
+    private String body;
+    private  String source;
 
     public Motivation(int id, String body, String source) {
         this.id = id;
