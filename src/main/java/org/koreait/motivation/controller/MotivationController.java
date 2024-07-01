@@ -45,7 +45,7 @@ public class MotivationController {
         }
     }
 
-    public void remove() {
+    public void remove(String a) {
 
     }
 

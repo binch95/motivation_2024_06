@@ -12,7 +12,7 @@ public class Rq {
 
         String[] bits = cmd.split("\\?", 2);
         actionmethod = bits[0];
-
+if (bits.length > 1) {return;}
         String[] paramsbits;
         try {
             paramsbits = bits[1].split("&");
@@ -31,7 +31,7 @@ public class Rq {
         return params.get(paramName);
     }
 
-    private String getActionmethod() {
+    public String getActionmethod() {
         return actionmethod;
     }
 }

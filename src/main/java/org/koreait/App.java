@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class App {
 
+    byte system_status = 1;
+
     public App() {
     }
 
@@ -20,34 +22,32 @@ public class App {
         MotivationController motivationController = new MotivationController();
         SystemController systemController = new SystemController();
 
-        while (true) {
+        while (system_status == 1) {
             System.out.println("명령어) ");
             String cmd = Container.getScanner().nextLine().trim();
+            if (cmd.equals("")) {System.out.println("명령어를 입력해");}
+            Rq rq = new Rq(cmd);
 
-            if (cmd.equals("exit")) {
-                systemController.exit();
-                break;
-            } else if (cmd.equals("")) {
-                System.out.println("명령어를 입력해");
-                continue;
-            }
+            switch (rq.getActionmethod()) {
+                case "exit":
+                    system_status = 0;
+                    break;
+                case "add":
+                    motivationController.add();
+                    break;
+                case "list":
+                    motivationController.list();
+                    break;
+                case "delete":
+                    motivationController.remove(rq.getParams("id)"));
+                    break;
+                case "update":
+                    motivationController.update();
+                    break;
+                default:
+                    System.out.println("사용할 수 없는 명령어 입니다.");
+                    break;
 
-
-            if (cmd.equals("add")) {
-                motivationController.add();
-            } else if (cmd.equals("list")) {
-                motivationController.list();
-
-            } else if (cmd.startsWith("delete?id=")) {
-
-                Rq Rq = new Rq(cmd);
-
-
-                    motivationController.remove();
-
-
-            } else if (cmd.equals("수정")) {
-                motivationController.update();
             }
         }
     }
