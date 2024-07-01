@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MotivationController {
+    int editId;
     Scanner sc;
     ArrayList<Motivation> motivations = new ArrayList<>();
 
@@ -45,23 +46,54 @@ public class MotivationController {
         }
     }
 
-    public void remove(String a) {
+    public void remove(Rq rq) {
+        int id;
+        try{
+            id = Integer.parseInt(rq.getParams("id"));
+        }catch (NumberFormatException e) {
+            System.out.println("잘못 입력했어");
+            return;
+        }
+        Motivation motivation = findBy(id);
+        if (motivation == null) {
+            System.out.printf("%d번 motivation은 없어\n");
+            return;
+        }
+        motivations.remove(motivation);
+        System.out.printf("%d번 motivation을 삭제했습니다.\n",id);
 
     }
 
-    public void update() {
-        System.out.print("수정하실 ID : ");
-        int setid = Integer.parseInt(Container.getScanner().nextLine());
-        System.out.print("수정하실 source : ");
-        String setsource = Container.getScanner().nextLine();
-        System.out.print("수정하실 body : ");
-        String setbody = Container.getScanner().nextLine();
-        for (int i = 0; i < motivations.size(); i++) {
-            if (motivations.get(i).getId() == setid) {
-                System.out.printf("%d번 motivation이 수정되었습니다.\n", motivations.get(i).getId());
-                motivations.set(i, new Motivation(setid, setsource, setbody));
-                break;
+
+    public void update(Rq rq) {
+        int id;
+        try{
+            id = Integer.parseInt(rq.getParams("id"));
+        }catch (NumberFormatException e) {
+            System.out.println("잘못 입력했어");
+            return;
+        }
+        Motivation motivation = findBy(id);
+        if (motivation == null) {
+            System.out.printf("%d번 motivation은 없어\n", id);
+            return;
+        }
+        System.out.print("body : ");
+        String body = Container.getScanner().nextLine();
+        System.out.print("source : ");
+        String source = Container.getScanner().nextLine();
+        motivation.setBody(body);
+        motivation.setSource(source);
+        System.out.printf("%d번 motivation이 수정 되었습니다.\n",id);
+    }
+
+    private Motivation findBy(int id) {
+        for (Motivation motivation : motivations) {
+            if (motivation.getId() == id) {
+                return motivation;
             }
         }
+        return null;
     }
+
 }

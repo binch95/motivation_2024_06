@@ -23,13 +23,15 @@ public class App {
         SystemController systemController = new SystemController();
 
         while (system_status == 1) {
-            System.out.println("명령어) ");
+            System.out.print("명령어) ");
             String cmd = Container.getScanner().nextLine().trim();
             if (cmd.equals("")) {System.out.println("명령어를 입력해");}
+
             Rq rq = new Rq(cmd);
 
             switch (rq.getActionmethod()) {
                 case "exit":
+                    System.out.println("== motivation 종료 ==");
                     system_status = 0;
                     break;
                 case "add":
@@ -39,10 +41,10 @@ public class App {
                     motivationController.list();
                     break;
                 case "delete":
-                    motivationController.remove(rq.getParams("id)"));
+                    motivationController.remove(rq);
                     break;
-                case "update":
-                    motivationController.update();
+                case "edit":
+                    motivationController.update(rq);
                     break;
                 default:
                     System.out.println("사용할 수 없는 명령어 입니다.");
